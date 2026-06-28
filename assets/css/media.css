@@ -1,0 +1,56 @@
+/* =====================================================================
+ *  MDLF media picker + gallery editor styles (media.js).
+ *  Self-contained; loaded in the admin builder and the live editor.
+ * ===================================================================== */
+
+/* single media field */
+.mdlf-media-field{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+.mdlf-media-thumb{
+  width:72px; height:56px; border-radius:8px; border:1px solid #D8CFBE; flex:0 0 auto;
+  background-size:cover; background-position:center; background-color:#F3EEDF;
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#8a8170;
+}
+.mdlf-btn-pick, .mdlf-btn-clear, .mdlf-gal-add{
+  border:1px solid #D8CFBE; background:#fff; color:#0E1B33; cursor:pointer;
+  border-radius:999px; padding:.4rem .9rem; font:inherit; font-size:.84rem;
+}
+.mdlf-btn-pick{ background:#D7A33A; border-color:#D7A33A; font-weight:700; }
+.mdlf-btn-pick:hover{ filter:brightness(1.05); }
+.mdlf-btn-clear:hover, .mdlf-gal-add:hover{ background:#F3EEDF; }
+
+/* gallery editor */
+.mdlf-gallery{ display:flex; flex-direction:column; gap:.5rem; }
+.mdlf-gal-item{ display:flex; align-items:center; gap:.6rem; border:1px solid #E3DACA; border-radius:10px; padding:.4rem; background:#fff; }
+.mdlf-gal-thumb{ width:64px; height:48px; flex:0 0 auto; border-radius:6px; background:#F3EEDF center/cover no-repeat; }
+.mdlf-gal-cap{ flex:1; }
+.mdlf-gal-ctrls{ display:flex; gap:.2rem; }
+.mdlf-gal-ctrls button{ border:0; background:#F3EEDF; color:#0E1B33; cursor:pointer; border-radius:6px; padding:.25rem .45rem; font-size:.8rem; }
+.mdlf-gal-ctrls button:hover{ background:#e7dec9; }
+.mdlf-gal-add{ align-self:flex-start; }
+
+/* picker modal */
+.mdlf-mp-overlay{
+  position:fixed; inset:0; z-index:10000; background:rgba(14,27,51,.4);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .16s; font-family:Karla,system-ui,sans-serif;
+}
+.mdlf-mp-overlay.open{ opacity:1; pointer-events:auto; }
+.mdlf-mp{
+  background:#fff; width:min(760px,94vw); max-height:85vh; border-radius:14px; overflow:hidden;
+  display:flex; flex-direction:column; box-shadow:0 24px 60px rgba(14,27,51,.4);
+}
+.mdlf-mp-head{ display:flex; align-items:center; gap:.6rem; padding:.8rem 1rem; border-bottom:1px solid #E3DACA; background:#FBF8F1; }
+.mdlf-mp-title{ flex:1; color:#0E1B33; text-transform:capitalize; }
+.mdlf-mp-upload{ cursor:pointer; background:#D7A33A; color:#0E1B33; font-weight:700; border-radius:999px; padding:.4rem 1rem; font-size:.84rem; }
+.mdlf-mp-done{ border:1px solid #D8CFBE; background:#fff; border-radius:999px; padding:.4rem 1rem; cursor:pointer; font:inherit; font-size:.84rem; }
+.mdlf-mp-x{ border:0; background:none; font-size:1.4rem; cursor:pointer; line-height:1; color:#0E1B33; }
+.mdlf-mp-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:.6rem; padding:1rem; overflow:auto; }
+.mdlf-mp-hint{ color:#8a8170; padding:1rem; grid-column:1/-1; }
+.mdlf-mp-item{
+  aspect-ratio:4/3; border:1px solid #E3DACA; border-radius:10px; cursor:pointer; padding:0; overflow:hidden;
+  background:#F3EEDF center/cover no-repeat;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2rem; color:#0E1B33;
+}
+.mdlf-mp-item span{ font-size:1.8rem; }
+.mdlf-mp-item small{ font-size:.68rem; max-width:100%; padding:0 .3rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mdlf-mp-item:hover{ outline:2px solid #D7A33A; outline-offset:1px; }

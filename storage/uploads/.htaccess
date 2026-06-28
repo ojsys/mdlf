@@ -1,0 +1,12 @@
+# Uploaded media (images, audio, video, logo, favicon) must be web-servable,
+# even though the parent storage/.htaccess denies everything. This re-grants
+# access to THIS folder only.
+Require all granted
+
+# ...but never let anything here be executed as a script.
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|cgi|pl|py|sh|asp|aspx)$">
+    Require all denied
+</FilesMatch>
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .cgi .pl .py
+RemoveType .php .phtml .php3 .php4 .php5 .php7
+Options -Indexes -ExecCGI

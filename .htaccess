@@ -1,0 +1,39 @@
+# MDLF — Apache config for cPanel / shared hosting
+
+# ---- Pretty URLs: route everything through index.php ----
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If the app lives in a subfolder, uncomment and set it:
+    # RewriteBase /mdlf/
+
+    # Don't rewrite real files or directories (assets, images, etc.)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# ---- Default document ----
+DirectoryIndex index.php
+
+# ---- Block access to sensitive files ----
+<FilesMatch "\.(sql|md|log)$">
+    Require all denied
+</FilesMatch>
+
+<Files "config.php">
+    Require all denied
+</Files>
+
+# ---- Don't list directories ----
+Options -Indexes
+
+# ---- Light caching for static assets ----
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css            "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/jpeg          "access plus 30 days"
+    ExpiresByType image/png           "access plus 30 days"
+    ExpiresByType image/svg+xml       "access plus 30 days"
+</IfModule>
