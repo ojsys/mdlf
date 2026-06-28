@@ -51,8 +51,7 @@ function csrf_field(): string {
 function csrf_check(): void {
     $ok = isset($_POST['_csrf']) && hash_equals($_SESSION['_csrf'] ?? '', $_POST['_csrf']);
     if (!$ok) {
-        http_response_code(419);
-        exit('Session expired. Please go back and try again.');
+        abort(419, 'Session expired', 'Your session expired or this form is stale. Please go back and try again.');
     }
 }
 
@@ -86,7 +85,7 @@ function require_login(): void {
 }
 function require_admin(): void {
     if (!is_logged_in()) { redirect('admin/login'); }
-    if (!is_admin()) { http_response_code(403); exit('Admins only.'); }
+    if (!is_admin()) { abort(403, 'Admins only', 'You need an administrator account to view this area.'); }
 }
 
 /* ---- Settings (cached per request) ---- */
@@ -126,6 +125,19 @@ function view(string $template, array $data = [], string $layout = 'public'): st
 function render(string $template, array $data = [], string $layout = 'public'): void {
     echo view($template, $data, $layout);
     clear_old();
+}
+
+/**
+ * Send an error status and render the branded error page, then stop.
+ * For AJAX requests, returns JSON instead of an HTML page.
+ */
+function abort(int $code, string $title, string $message): void {
+    http_response_code($code);
+    if (is_ajax()) {
+        json_out(['ok' => false, 'error' => $title, 'code' => $code], $code);
+    }
+    echo view('public/error', ['code' => $code, 'title' => $title, 'message' => $message]);
+    exit;
 }
 
 /* ---- Progress helpers for the learning portal ---- */

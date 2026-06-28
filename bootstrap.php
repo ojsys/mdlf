@@ -8,6 +8,21 @@ $config = require __DIR__ . '/config.php';
 error_reporting(E_ALL);
 ini_set('display_errors', $config['debug'] ? '1' : '0');
 
+/* ---- Catch uncaught exceptions: branded 500 (details only when debug) ---- */
+set_exception_handler(function (Throwable $ex) use ($config) {
+    if (!headers_sent()) http_response_code(500);
+    if (!empty($config['debug'])) {
+        echo '<pre style="white-space:pre-wrap;padding:1.5rem;font:14px/1.5 ui-monospace,monospace">'
+           . htmlspecialchars($ex->getMessage() . "\n\n" . $ex->getFile() . ':' . $ex->getLine()
+           . "\n\n" . $ex->getTraceAsString(), ENT_QUOTES) . '</pre>';
+    } elseif (is_file(__DIR__ . '/errors/500.html')) {
+        readfile(__DIR__ . '/errors/500.html');
+    } else {
+        echo 'Internal Server Error';
+    }
+    exit;
+});
+
 require __DIR__ . '/app/core/db.php';
 require __DIR__ . '/app/core/helpers.php';
 require __DIR__ . '/app/core/blocks.php';

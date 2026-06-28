@@ -25,8 +25,21 @@ DirectoryIndex index.php
     Require all denied
 </Files>
 
+# ---- Block the Git repo, dot-files, and dev/config templates ----
+RedirectMatch 404 ^/\.git
+<FilesMatch "(^\.|\.(example\.php|gitignore|env)$)">
+    Require all denied
+</FilesMatch>
+
 # ---- Don't list directories ----
 Options -Indexes
+
+# ---- Branded error pages (server-level: denied files, PHP crashes, etc.) ----
+# App-level 404s (unknown pages/stories) are rendered by index.php itself.
+# In a subfolder install, prefix these paths, e.g. /mdlf/errors/404.html
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
 
 # ---- Light caching for static assets ----
 <IfModule mod_expires.c>

@@ -1,0 +1,17 @@
+# ---- Secrets / per-environment config ----
+# Real credentials live here; copy config.example.php -> config.php on each machine.
+config.php
+
+# ---- Local SQLite database (dev only; production uses MySQL) ----
+storage/*.sqlite
+storage/*.sqlite-journal
+
+# ---- Uploaded media (user content) — keep the folder + its .htaccess only ----
+storage/uploads/*
+!storage/uploads/.htaccess
+
+# ---- OS / editor cruft ----
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.log
